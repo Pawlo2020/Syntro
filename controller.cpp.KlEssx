@@ -1,0 +1,53 @@
+#include "controller.h"
+#include <QDebug>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QTimer>
+#include <QDateTime>
+
+#include "globals.h"
+
+Controller::Controller(QObject* parent):QObject(parent){
+qDebug("Controller created");
+
+
+
+}
+
+void Controller::onAccelMove(qreal real){
+    qDebug() << real;
+
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *rect = root->findChild<QObject*>("pointer");
+        QObject *rect2 = root->findChild<QObject*>("tek");
+
+        if(rect){
+            QMetaObject::invokeMethod(rect2, "stop");
+            rect->setProperty("targetRot", real);
+            //QMetaObject::invokeMethod(rect2, "start");
+            rect2->setProperty("to", real);
+            QMetaObject::invokeMethod(rect2, "start");
+        }
+
+    }
+}
+
+void Controller::upGear(int number){
+    if(number!=5){
+        number++;
+    }
+
+
+}
+
+void Controller::downGear(int number){
+    if(number!=0){
+        number--;
+    }
+
+
+}

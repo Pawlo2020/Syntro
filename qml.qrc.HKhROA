@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/Syntro/Cluster/Assets"/>
+    <qresource prefix="/Syntro"/>
+</RCC>

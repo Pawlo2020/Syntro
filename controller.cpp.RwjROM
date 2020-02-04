@@ -1,0 +1,83 @@
+#include "controller.h"
+#include <QDebug>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QTimer>
+#include <QDateTime>
+
+#include "globals.h"
+
+Controller::Controller(QObject* parent):QObject(parent){
+qDebug("Controller created");
+
+
+QTimer* timer = new QTimer(this);
+connect(timer, SIGNAL(timeout()), this, SLOT(justDo()));
+
+timer->start();
+}
+
+void Controller::justDo(){
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *rect = root->findChild<QObject*>("pointer");
+        QObject *rect2 = root->findChild<QObject*>("tek");
+
+        if(rect){
+
+        }
+       }
+}
+
+void Controller::onAccelMove(qreal real){
+    qDebug() << real;
+
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *rect = root->findChild<QObject*>("pointer");
+        QObject *rect2 = root->findChild<QObject*>("tek");
+
+        if(rect){
+            QMetaObject::invokeMethod(rect2, "stop");
+            rect->setProperty("targetRot", real);
+            //QMetaObject::invokeMethod(rect2, "start");
+            rect2->setProperty("to", real);
+            QMetaObject::invokeMethod(rect2, "start");
+        }
+
+    }
+}
+
+void Controller::upGear(){
+    if(_currentGear!=5){
+        _currentGear++;
+    }
+
+    QObject *root = _geng->rootObjects().value(0);
+    QObject *rect = root->findChild<QObject*>("gearLbl");
+
+    if(rect){
+        rect->setProperty("text", gearTable[_currentGear]);
+    }
+
+
+}
+
+void Controller::downGear(){
+    if(_currentGear!=0){
+        _currentGear--;
+    }
+
+    QObject *root = _geng->rootObjects().value(0);
+    QObject *rect = root->findChild<QObject*>("gearLbl");
+
+    if(rect){
+        rect->setProperty("text", gearTable[_currentGear]);
+    }
+
+
+}

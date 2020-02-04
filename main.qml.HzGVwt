@@ -1,0 +1,49 @@
+import QtQuick 2.4
+import QtQuick.Window 2.4
+import "test"
+Window {
+    visible: true
+    width: 1200
+    height: 600
+    title: qsTr("Syntro")
+
+    Image {
+        id: background
+        x: 0
+        y: 0
+        width: 1200
+        height: 600
+        antialiasing: true
+        source: "Assets/clusterBG.png"
+        fillMode: Image.PreserveAspectFit
+
+        Text {
+            id: element
+            x: 311
+            y: 512
+            width: 191
+            height: 68
+            color: "#ffffff"
+            text: "Syntro"
+            font.family: "Astro"
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 24
+        }
+
+        Text {
+            id: element1
+            x: 382
+            y: 560
+            width: 574
+            height: 40
+            color: "#ffffff"
+            text: "Remastered Polonez Caro car cluster simulator"
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: 18
+            font.family: "Orbitron"
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+    }
+}

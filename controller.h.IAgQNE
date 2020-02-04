@@ -1,0 +1,50 @@
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
+#include <QObject>
+#include <QString>
+class Controller : public QObject
+{
+    Q_OBJECT
+
+private:
+    int _currentGear=0;
+
+    bool engine = false;
+    bool lowBeams = true;
+    bool fullBeams = false;
+
+    bool lowOil = false;
+    bool checkEngine = false;
+    bool lowBattery = false;
+
+
+
+public:
+    Controller(QObject* parent=0);
+
+    Q_INVOKABLE void onAccelMove(qreal real);
+
+    //Q_INVOKABLE void getTime();
+
+    QString gearTable[6]= {"N", "1", "2", "3", "4", "5"};
+
+
+    Q_INVOKABLE void upGear();
+
+    Q_INVOKABLE void downGear();
+
+    Q_INVOKABLE void justDo();
+
+    Q_INVOKABLE void switchEngine();
+
+    Q_INVOKABLE void switchLowBeams();
+    Q_INVOKABLE void switchFullBeams();
+
+    Q_INVOKABLE void switchLowOil();
+    Q_INVOKABLE void switchLowBattery();
+    Q_INVOKABLE void switchCheckEngine();
+};
+
+
+#endif // CONTROLLER_H

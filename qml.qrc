@@ -1,0 +1,44 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Assets/astro.ttf</file>
+        <file>Assets/clusterBG.png</file>
+        <file>Assets/glasscut.png</file>
+        <file>Assets/Orbitron-VariableFont_wght.ttf</file>
+        <file>Assets/pointer.png</file>
+        <file>Assets/pointerItself.png</file>
+        <file>Assets/PointerMid.png</file>
+        <file>Assets/tachometer shield.png</file>
+        <file>Sure.qml</file>
+        <file>Assets/speedometer shield.png</file>
+        <file>Speedometer.qml</file>
+        <file>Assets/cockpit.png</file>
+        <file>Assets/cockpit glass cut.png</file>
+        <file>Assets/cockpitwhat.png</file>
+        <file>Assets/test1butshadower.png</file>
+        <file>Assets/speedometer shield SHADOWER.png</file>
+        <file>Assets/icons/accumulatorred.png</file>
+        <file>Assets/icons/car-light-blu.png</file>
+        <file>Assets/icons/car-light-grn.png</file>
+        <file>Assets/icons/motorred.png</file>
+        <file>Assets/icons/nogasoline.png</file>
+        <file>Assets/icons/nooil.png</file>
+        <file>Assets/icons/yesgasoline.png</file>
+        <file>Assets/icons/yesoil.png</file>
+        <file>Assets/tophud.png</file>
+        <file>HUD.qml</file>
+        <file>Assets/midPanel.png</file>
+        <file>MainPanel.qml</file>
+        <file>MenuBut.qml</file>
+        <file>Pages/MainPage.qml</file>
+        <file>Pages/FuelPage.qml</file>
+        <file>Pages/MileagePage.qml</file>
+        <file>Pages/MusicPage.qml</file>
+        <file>Pages/AboutPage.qml</file>
+        <file>ControlPanel.qml</file>
+        <file>Assets/icons/car-light-GONE.png</file>
+    </qresource>
+    <qresource prefix="/Syntro/Cluster/Assets"/>
+    <qresource prefix="/test"/>
+    <qresource prefix="/Pages"/>
+</RCC>

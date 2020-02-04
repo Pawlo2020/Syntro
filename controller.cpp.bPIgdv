@@ -1,0 +1,253 @@
+#include "controller.h"
+#include <QDebug>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QTimer>
+#include <QDateTime>
+#include <QThread>
+
+#include "globals.h"
+
+Controller::Controller(QObject* parent):QObject(parent){
+qDebug("Controller created");
+
+
+QTimer* timer = new QTimer(this);
+connect(timer, SIGNAL(timeout()), this, SLOT(justDo()));
+
+timer->start();
+}
+
+void Controller::switchEngine(){
+engine = !engine;
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *hudOil = root->findChild<QObject*>("hudOil");
+    QObject *hudAccu = root->findChild<QObject*>("hudAccu");
+    QObject *hudEngine = root->findChild<QObject*>("hudEngine");
+
+    if(hudOil){
+        QThread *thread = QThread::create(animateEngineTurnON(), arg1, arg2);
+        // extra setup...
+        thread->start(); // calls myFunction in another thread, passing arg1 and arg2
+
+    }
+ }
+
+
+}
+
+void Controller::animateEngineTurnON(){
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *hudOil = root->findChild<QObject*>("hudOil");
+        QObject *hudAccu = root->findChild<QObject*>("hudAccu");
+        QObject *hudEngine = root->findChild<QObject*>("hudEngine");
+
+        if(hudOil){
+            hudOil->setProperty("source", QStringLiteral("qrc:/Assets/icons/nooil.png"));
+            hudAccu->setProperty("source", QStringLiteral("qrc:/Assets/icons/accumulatorred.png"));
+            hudEngine->setProperty("source", QStringLiteral("qrc:/Assets/icons/motorred.png"));
+
+            Sleep(3000);
+
+            hudOil->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+            hudAccu->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+            hudEngine->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+        }
+     }
+}
+
+void Controller::switchLowOil(){
+lowOil = !lowOil;
+
+
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *rect = root->findChild<QObject*>("hudOil");
+
+    if(rect){
+        if(lowOil){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/nooil.png"));
+        }
+
+        if(!lowOil){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+
+        }
+
+    }
+}
+
+}
+
+void Controller::switchLowBattery(){
+lowBattery = !lowBattery;
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *rect = root->findChild<QObject*>("hudAccu");
+
+    if(rect){
+        if(lowBattery){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/accumulatorred.png"));
+        }
+
+        if(!lowBattery){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+
+        }
+
+    }
+}
+}
+
+void Controller::switchCheckEngine(){
+checkEngine = !checkEngine;
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *rect = root->findChild<QObject*>("hudEngine");
+
+    if(rect){
+        if(checkEngine){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/motorred.png"));
+        }
+
+        if(!checkEngine){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+
+        }
+
+    }
+}
+}
+
+
+
+
+void Controller::switchLowBeams(){
+lowBeams = !lowBeams;
+
+
+//  source: "Assets/icons/car-light-grn.png"
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *rect = root->findChild<QObject*>("hudLights");
+
+    if(rect){
+        if(lowBeams && !fullBeams){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-grn.png"));
+        }
+
+        if(!lowBeams && !fullBeams){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+
+        }
+
+    }
+}
+}
+
+void Controller::switchFullBeams(){
+fullBeams = !fullBeams;
+
+
+if(_geng!=nullptr){
+    QObject *root = _geng->rootObjects().value(0);
+
+    QObject *rect = root->findChild<QObject*>("hudLights");
+
+    if(rect){
+        if(fullBeams){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-blu.png"));
+        }
+
+        if(!lowBeams && !fullBeams){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-GONE.png"));
+
+        }
+
+        if(!fullBeams && lowBeams){
+            rect->setProperty("source", QStringLiteral("qrc:/Assets/icons/car-light-grn.png"));
+        }
+
+    }
+}
+
+}
+
+void Controller::justDo(){
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *rect = root->findChild<QObject*>("pointer");
+        QObject *rect2 = root->findChild<QObject*>("tek");
+
+        if(rect){
+        rect->setProperty("rotation", rect->property("targetRot"));
+        //qDebug() << rect->property("targetRot");
+        }
+       }
+}
+
+void Controller::onAccelMove(qreal real){
+    //qDebug() << real;
+
+    if(_geng!=nullptr){
+        QObject *root = _geng->rootObjects().value(0);
+
+        QObject *rect = root->findChild<QObject*>("pointer");
+        QObject *rect2 = root->findChild<QObject*>("tek");
+
+        if(rect){
+            //QMetaObject::invokeMethod(rect2, "stop");
+            rect->setProperty("targetRot", real);
+            //QMetaObject::invokeMethod(rect2, "start");
+            //rect2->setProperty("to", real);
+            //QMetaObject::invokeMethod(rect2, "start");
+        }
+
+    }
+}
+
+void Controller::upGear(){
+    if(_currentGear!=5){
+        _currentGear++;
+    }
+
+    QObject *root = _geng->rootObjects().value(0);
+    QObject *rect = root->findChild<QObject*>("gearLbl");
+
+    if(rect){
+        rect->setProperty("text", gearTable[_currentGear]);
+    }
+
+
+}
+
+void Controller::downGear(){
+    if(_currentGear!=0){
+        _currentGear--;
+    }
+
+    QObject *root = _geng->rootObjects().value(0);
+    QObject *rect = root->findChild<QObject*>("gearLbl");
+
+    if(rect){
+        rect->setProperty("text", gearTable[_currentGear]);
+    }
+
+
+}
